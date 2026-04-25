@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Suma con MariaDB</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; line-height: 1.6; }
+        .card { border: 1px solid #ddd; padding: 20px; border-radius: 8px; box-shadow: 2px 2px 10px #eee; }
+        input { padding: 8px; margin: 5px 0; width: 100px; }
+        button { padding: 8px 15px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .success { color: green; font-weight: bold; font-size: 1.2em; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Suma de números (Django + MariaDB)</h2>
+        <form method="post">
+            {% csrf_token %}
+            <input type="number" step="any" name="num1" placeholder="Número 1" required> +
+            <input type="number" step="any" name="num2" placeholder="Número 2" required>
+            <button type="submit">Calcular</button>
+        </form>
+
+        {% if resultado is not None %}
+            <p class="success">Resultado: {{ resultado }}</p>
+        {% endif %}
+
+        <h3>Historial (últimas 5 en DB)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Operación</th>
+                    <th>Resultado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for op in historial %}
+                <tr>
+                    <td>{{ op.fecha|date:"H:i:s" }}</td>
+                    <td>{{ op.numero1 }} + {{ op.numero2 }}</td>
+                    <td>{{ op.resultado }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">No hay operaciones registradas.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

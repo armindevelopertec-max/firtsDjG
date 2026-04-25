@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+  db:
+    image: mariadb:10.11
+    container_name: db_django
+    restart: always
+    environment:
+      MYSQL_DATABASE: tarea_django
+      MYSQL_USER: django_user
+      MYSQL_PASSWORD: 123456
+      MYSQL_ROOT_PASSWORD: root123
+    ports:
+      - "3307:3306"
+    networks:
+      - django_net
+
+  web:
+    build: .
+    container_name: django_app
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app:Z
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - django_net
+
+networks:
+  django_net:
+    driver: bridge
