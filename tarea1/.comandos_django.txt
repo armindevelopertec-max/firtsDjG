@@ -1,0 +1,25 @@
+python manage.py runserver
+python manage.py startproject nombre
+python manage.py startapp nombre_app
+
+python manage.py makemigrations
+python manage.py migrate
+python manage.py showmigrations
+
+python manage.py createsuperuser
+python manage.py changepassword <usuario>
+
+python manage.py shell
+python manage.py dbshell
+
+python manage.py collectstatic
+
+python manage.py test
+
+python manage.py check
+python manage.py flush
+python manage.py loaddata datos.json
+python manage.py dumpdata
+
+podman exec -it django_app python manage.py migrate
+podman exec -it django_app python manage.py runserver 0.0.0.0:8000
